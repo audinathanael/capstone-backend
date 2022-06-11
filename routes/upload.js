@@ -10,6 +10,7 @@ const {
   getUploadHandler, addFileUploadhandler,
 } = require('../handler/upload');
 
+
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     if (!req.query.model) {
@@ -38,7 +39,7 @@ const upload = multer({
 });
 
 router.get('/', getUploadHandler);
-router.post('/', upload.single('predict-img'), addFileUploadHandler);
-router.delete('/', deleteFileUploadHandler);
+router.post('/', upload.single('predict-img'), addFileUploadhandler);
+
 
 module.exports = router;

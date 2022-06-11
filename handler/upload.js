@@ -1,13 +1,20 @@
 const tf = require('@tensorflow/tfjs-node');
 const {getImage} = require('../utils/loadImage');
-const {writeFile, readFile} =require('../dataHandler/upload');
 const path = require('path');
 const hostname = require('../utils/localhost');
 const {autism} = require('../utils/label');
-const fs = require('fs');
 const labels =[];
 const predictions = nuil;
 const autismModel = null;
+const mysql = require('mysql');
+
+
+const connect = mysql.createConnection({
+  socketPath: '34.142.199.0',
+  user: 'root',
+  password: 'capstone123',
+  database: 'dbdeteksiautisme',
+});
 
 const argMax = (array) => {
   return [].reduce.call(array, (m, c, i, arr) => (c > arr[m] ? i : m), 0);
@@ -26,14 +33,27 @@ const baseResponse = (data, status = 'success') =>{
 const getUploadHandler = (req, res) => {
   try {
     const files = null;
-    const {model}= req.query;
-
-    if (model) {
-      const query = {model};
-    }
+    const {model} = req.query;
+    const query = 'SELECT * FROm image Where id= \'2\'';
+    connect.query(query, [model], (error, result) => {
+      if (!result) {
+        res.json({status: 'not Found'});
+      } else {
+        res.json(baseResponse(result));
+      }
+    });
+    return files;
   } catch (e) {
-
+    console.log(e.message);
+    return res.status(404).json({
+      status: 'fail',
+      message: e.message,
+    });
   }
+  return res.status(500).json({
+    status: 'failed',
+    message: 'internal server execption',
+  });
 };
 
 const addFileUploadhandler = async (req, res) => {
@@ -82,7 +102,7 @@ const addFileUploadhandler = async (req, res) => {
       disease: disease,
       prediction: (prediction * 100).toFixed(3),
     };
-    uploadfiles.files.push(newFile);
+    uploadFiles.files.push(newFile);
 
     return res.status(201).json(baseResponse(newFile)); // 201 created
   } catch (error) {

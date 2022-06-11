@@ -2,8 +2,8 @@ const {Storage} = require('@google-cloud/storage');
 const storage = new Storage();
 
 const downloadModel = async (
-    bucketName = '',
-    fileName = '',
+    bucketName = 'bucket-deteksiautisme',
+    fileName = 'AutismDetection_model.h5',
     destFilename = path.join(cwd, ''))=>{
   const options = {
     destination: destFilename,
