@@ -34,7 +34,7 @@ const getUploadHandler = (req, res) => {
   try {
     const files = null;
     const {model} = req.query;
-    const query = 'SELECT * FROm image Where id= \'2\'';
+    const query = 'SELECT * FROM test Where id= \'2\'';
     connect.query(query, [model], (error, result) => {
       if (!result) {
         res.json({status: 'not Found'});
@@ -71,7 +71,7 @@ const addFileUploadhandler = async (req, res) => {
     if (model) {
       if (!autismModel) {
         autismModel = await tf.loadLayersModel(
-            'files://' + path.join(__dirname, '..', '..', 'models', 'autismDetectionModel', 'model.json'),
+            'files://' + path.join(__dirname, '..', 'models', 'autismDetectionModel', 'model.json'),
         );
       }
       labels= autism;
@@ -80,7 +80,7 @@ const addFileUploadhandler = async (req, res) => {
     }
     // image prediction
     const clientimg = await getImage(
-        path.join(_dirname, '..', '..', 'client-img', model, filename),
+        path.join(_dirname, '..', 'client-img', model, filename),
     );
     if (model) {
       predictions = await autismModel.predict(clientimg).datasyc();

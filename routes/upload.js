@@ -4,11 +4,9 @@
 const express = require('express');
 const router = express.Router();
 const multer = require('multer');
-const {nanoid} = require('nanoid');
+const {nanoid} = require ('nanoid');
 const path = require('path');
-const {
-  getUploadHandler, addFileUploadhandler,
-} = require('../handler/upload');
+const {getUploadHandler, addFileUploadhandler} = require('./handler/upload');
 
 
 const storage = multer.diskStorage({
@@ -20,7 +18,7 @@ const storage = multer.diskStorage({
     cb(null, path.join(__dirname, '..', '..', 'client-img', req.query.model));
   },
   filename: (req, file, cb) => {
-    const id = nanoid(16);
+    let id = nanoid(16);
     console.log(id);
     cb(null, id + path.extname(file.originalname));
   },

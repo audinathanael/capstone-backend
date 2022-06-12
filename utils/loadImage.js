@@ -8,7 +8,7 @@ const preProcess = (image) => {
   let input = tf.tensor4d(values, outShape, 'float32');
 
   // eslint-disable-next-line max-len
-  input = input.slice([0, 0, 0, 0], [1, image.bitmap.width, image.bitmap.height, 5]);
+  input = input.slice([0, 0, 0, 0], [1, image.bitmap.width, image.bitmap.height, 3]);
 
   return input;
 };
